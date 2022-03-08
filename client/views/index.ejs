@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quick Type</title>
+    <link rel="stylesheet" href="../style.css">
+  </head>
+  <body>
+    <div class="header">
+      <div class="title headerText" onclick="location.href='localhost:8080';">Quick Type</div>
+      <div class="nonTitleHeaderText">
+        <div class="headerText">Sign In</div>
+        <div class="headerText">Settings</div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="textBox noSelect">
+        <% text.forEach((word) => { %>
+          <div class="word noSelect">
+            <% for (letter of word) { %>
+              <div class="letter noSelect"><%= letter === ' '? "\u00A0" : letter %></div>
+            <% } %>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </body>
+  <script src="../script.js"></script>
+</html>

@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&family=Roboto:wght@100&display=swap');
+
+
+:root {
+  --con-color: rgb(253, 252, 243);
+  --content-color: rgb(255, 161, 104);
+  --compliment-color: rgb(105, 96, 87);
+  --accent-color: rgba(177, 169, 159, 1);
+  --incorrect-color: #cc0000;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-color);
+}
+
+.word {
+  display: inline-block;
+}
+
+@keyframes borderBlink {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: var(--compliment-color);
+    }
+}
+
+@keyframes shiftText {
+  from {
+    translate: translateY(0%);
+  }
+
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.header {
+  height: 10vh;
+  display: flex;
+}
+
+.headerText{
+  display: flex;
+  align-items: center;
+  padding: 0 5vw 0 5vw;
+  font-family: 'Raleway', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5em;
+}
+
+.headerText:hover {
+  color: var(--accent-color);
+  cursor: pointer;
+}
+
+.title {
+  font-size: 2.5em;
+}
+
+.nonTitleHeaderText {
+  margin-left: auto;
+  display: flex;
+}
+
+.container {
+  min-height: 90vh; /* minimum height = screen height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.textBox {
+  margin: auto;
+  height: 50vh;
+  width: 70vw;
+  overflow: hidden;
+}
+
+.word {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.letter {
+  float: left;
+  color: var(--content-color);
+  font-family: 'Roboto', sans-serif;  font-size: 2em;
+  border-left-style: solid;
+  border-color: transparent;
+}
+
+.noSelect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently */
+}
+
+.currKey {
+  border-left-style: solid;
+  border-color: var(--compliment-color);
+  /*animation: borderBlink 1s step-end infinite;*/
+}
+
+.incorrect {
+  color: var(--incorrect-color);
+  text-decoration: line-through;
+}
+
+.correct {
+  color: var(--accent-color);
+}
