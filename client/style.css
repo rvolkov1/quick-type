@@ -3,7 +3,7 @@
 
 
 :root {
-  --con-color: rgb(253, 252, 243);
+  --bg-color: rgb(253, 252, 243);
   --content-color: rgb(255, 161, 104);
   --compliment-color: rgb(105, 96, 87);
   --accent-color: rgba(177, 169, 159, 1);
@@ -46,6 +46,7 @@ html, body {
 }
 
 .headerText{
+  color: var(--compliment-color);
   display: flex;
   align-items: center;
   padding: 0 5vw 0 5vw;
@@ -67,6 +68,44 @@ html, body {
   margin-left: auto;
   display: flex;
 }
+
+/*
+.switch {
+  margin: auto;
+  height: 20px;
+  width: 40px;
+  background-color: var(--compliment-color);
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.slider {
+  float: left;
+  position: relative;
+  display: inline-block;
+  content: "";
+  height: 20px;
+  width: 20px;
+  background-color: var(--accent-color);
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+input:checked + .switch {
+  background-color: var(--compliment-color);
+}
+
+input:checked + .slider {
+  transform: translateX(20px);
+  background-color: var(--compliment-color);
+}
+*/
 
 .container {
   min-height: 90vh; /* minimum height = screen height */

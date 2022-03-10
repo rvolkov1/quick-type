@@ -1,104 +1,143 @@
-let currKey = 0;
-let words = 0;
-let altKey = false;
 
-const letters = document.getElementsByClassName('letter');
-letters[currKey].classList.add("currKey");
+function toggleDarkTheme() {
+  const bgColor = getComputedStyle(document.body).getPropertyValue("--bg-color");
+  const complimentColor = getComputedStyle(document.body).getPropertyValue("--compliment-color");
+  const root = document.documentElement;
 
-let currWord = letters[currKey].parentElement;
+  console.log("\"" + bgColor.trim() + "\"")
 
-function updateScroll(element) {
-  const textbox_top = element.parentElement.parentElement.getBoundingClientRect().top;
-  const element_top = element.parentElement.getBoundingClientRect().top;
+  root.style.setProperty('--compliment-color', bgColor.trim());
+  //root.style.setProperty('--compliment-color', 'blue');
+}
 
-  console.log(textbox_top)
-  console.log(element_top)
-  console.log((element_top - textbox_top)/element.parentElement.clientHeight)
+class TypeTest {
+  constructor(letters) {
+    this.letters = letters;
+    this.currKey = 0;
+    this.altKey = false;
+    this.charsIncorrect = [];
+    this.wordsIncorrect = [];
+    this.startTime;
+    this.end = false;
+  }
 
-  if ((element_top - textbox_top)/element.parentElement.clientHeight >= 3) {
-    console.log('yes')
-    const wordsToBeHidden = [];
-    for (word of document.getElementsByClassName('word')) {
-      if (word.style.display === "none") continue;
-      if (word.getBoundingClientRect().top === word.parentElement.getBoundingClientRect().top) {
-        wordsToBeHidden.push(word)
-      } else {
+  beginTest() {
+    this.startTime = Date.now();
+  }
+
+  endTest() {
+    this.end = true;
+
+    const wpm = this.letters[0].parentElement.parentElement.children.length / ((Date.now() - this.startTime) / (1000 * 60));
+    console.log(wpm)
+  }
+
+  toggleAltKey() {
+    this.altKey = !this.altKey;
+  }
+
+  convertCharValues(key) {
+    switch (key) {
+      case "&nbsp;":
+        return " ";
         break;
+      case "\'":
+      case "\‘":
+      case "\’":
+        return "\'";
+        break;
+      case "\"":
+      case "\”":
+      case "\“":
+        return "\"";
+        break;
+      default:
+        return this.letters[this.currKey].innerText;
+    }
+  }
+
+  updateScroll(element) {
+    const textbox_top = element.parentElement.parentElement.getBoundingClientRect().top;
+    const element_top = element.parentElement.getBoundingClientRect().top;
+
+    if ((element_top - textbox_top)/element.parentElement.clientHeight >= 3) {
+      const wordsToBeHidden = [];
+      for (const word of document.getElementsByClassName('word')) {
+        if (word.style.display === "none") continue;
+        if (word.getBoundingClientRect().top === word.parentElement.getBoundingClientRect().top) {
+          wordsToBeHidden.push(word)
+        } else {
+          break;
+        }
+      }
+      for (const word of wordsToBeHidden) {
+        word.style.display = "none";
       }
     }
-    for (word of wordsToBeHidden) {
-      word.style.display = "none";
+  }
+
+  altDelete() {
+    if ((this.letters[this.currKey-1].parentElement !== this.letters[this.currKey].parentElement && this.letters[this.currKey].innerHTML === "&nbsp;") || this.currKey == 0) return;
+
+    this.letters[this.currKey].classList.remove("currKey");
+    this.letters[this.currKey - 1].classList.remove("incorrect", "correct");
+    this.currKey --;
+    this.letters[this.currKey].classList.add("currKey");
+
+    if (this.letters[this.currKey-1].innerHTML === "&nbsp;") return;
+    this.altDelete();
+  }
+
+  updateText(key) {
+    if (key === "Alt") {
+      this.toggleAltKey();
+      return;
+    }
+
+    const prevLetterCorrect = this.currKey > 0 ? !this.letters[this.currKey - 1].classList.contains("incorrect") : true;
+
+    const currChar = this.convertCharValues(this.letters[this.currKey].innerHTML);
+
+    if (key === currChar && prevLetterCorrect && key.length === 1) {
+      this.letters[this.currKey].classList.remove("currKey");
+      this.letters[this.currKey].classList.add("correct");
+      this.currKey ++;
+      this.letters[this.currKey].classList.add("currKey");
+      this.updateScroll(this.letters[this.currKey])
+
+      if (this.startTime == undefined) {
+        this.beginTest();
+      } else if (this.currKey === this.letters.length-1) {
+        this.endTest();
+      }
+    }  else if (key === "Backspace" && this.currKey > 0 && (this.letters[this.currKey-1].parentElement == this.letters[this.currKey].parentElement || this.letters[this.currKey-1].classList.contains("incorrect"))) {
+      if (this.altKey) {
+        this.altDelete();
+      } else {
+        this.letters[this.currKey].classList.remove("currKey");
+        this.letters[this.currKey - 1].classList.remove("incorrect", "correct");
+        this.currKey --;
+        this.letters[this.currKey].classList.add("currKey");
+      }
+    } else if (key.length === 1) {
+      this.letters[this.currKey].classList.add("incorrect");
+      this.letters[this.currKey].classList.remove("currKey");
+      this.currKey ++;
+      this.letters[this.currKey].classList.add("currKey");
     }
   }
 }
 
-function altDelete() {
-  if ((letters[currKey-1].parentElement !== letters[currKey].parentElement && letters[currKey].innerHTML === "&nbsp;") || currKey == 0) return;
-
-  letters[currKey].classList.remove("currKey");
-  letters[currKey - 1].classList.remove("incorrect", "correct");
-  currKey --;
-  letters[currKey].classList.add("currKey");
-
-  if (letters[currKey-1].innerHTML === "&nbsp;") return;
-  altDelete();
-}
-
-function convertCharValues(key) {
-  switch (key) {
-    case "&nbsp;":
-      return " ";
-      break;
-    case "\'":
-    case "\‘":
-    case "\’":
-      return "\'";
-      break;
-    case "\"":
-    case "\”":
-    case "\“":
-      return "\"";
-      break;
-    default:
-      return letters[currKey].innerText;
-  }
-}
+const currentTypeTest = new TypeTest(document.getElementsByClassName('letter'));
 
 window.addEventListener('keydown', (e) => {
-  // convert non breaking spaces to " "
-  const prevLetterCorrect = currKey > 0 ? !letters[currKey - 1].classList.contains("incorrect") : true;
-
-  if (e.key === "Alt") {
-    altKey = true;
-  }
-
-  const currChar = convertCharValues(letters[currKey].innerHTML);
-
-  if (e.key === currChar && prevLetterCorrect && e.key.length === 1) {
-    letters[currKey].classList.remove("currKey");
-    letters[currKey].classList.add("correct");
-    currKey ++;
-    letters[currKey].classList.add("currKey");
-    updateScroll(letters[currKey])
-  }  else if (e.key === "Backspace" && currKey > 0 && (letters[currKey-1].parentElement == letters[currKey].parentElement || letters[currKey-1].classList.contains("incorrect"))) {
-      if (altKey) {
-        altDelete();
-      } else {
-        letters[currKey].classList.remove("currKey");
-        letters[currKey - 1].classList.remove("incorrect", "correct");
-        currKey --;
-        letters[currKey].classList.add("currKey");
-      }
-  } else if (e.key.length === 1) {
-    letters[currKey].classList.add("incorrect");
-    letters[currKey].classList.remove("currKey");
-    currKey ++;
-    letters[currKey].classList.add("currKey");
+  if (!currentTypeTest.end) {
+    currentTypeTest.updateText(e.key);
   }
 });
 
 window.addEventListener('keyup', (e) => {
-  if (e.key === "Alt") {
-    altKey = false;
+  if (e.key === "Alt" && !currentTypeTest.end) {
+    currentTypeTest.toggleAltKey();
   }
 });
