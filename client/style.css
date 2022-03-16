@@ -1,14 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&family=Roboto:wght@100&display=swap');
 
-
-:root {
-  --bg-color: rgb(253, 252, 243);
-  --content-color: rgb(255, 161, 104);
-  --compliment-color: rgb(105, 96, 87);
-  --accent-color: rgba(177, 169, 159, 1);
-  --incorrect-color: #cc0000;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --compliment-color: rgb(253, 252, 243);
+    --content-color: rgb(255, 161, 104);
+    --bg-color: rgb(105, 96, 87);
+    --accent-color: rgba(177, 169, 159, 1);
+    --incorrect-color: #cc0000;
+  }
 }
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-color: rgb(253, 252, 243);
+    --content-color: rgb(255, 161, 104);
+    --compliment-color: rgb(105, 96, 87);
+    --accent-color: rgba(177, 169, 159, 1);
+    --incorrect-color: #cc0000;
+  }
+}
+
 
 html, body {
     margin: 0;
@@ -107,7 +119,7 @@ input:checked + .slider {
 }
 */
 
-.container {
+.textContainer {
   min-height: 90vh; /* minimum height = screen height */
   display: flex;
   justify-content: center;
@@ -157,4 +169,8 @@ input:checked + .slider {
 
 .correct {
   color: var(--accent-color);
+}
+
+#resultsScreen {
+  display: none;
 }

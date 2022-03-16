@@ -7,6 +7,8 @@ const axios = require("axios");
 const port = 8080;
 const hamlet = "/texts/books/hamlet.txt";
 
+const reutersScraper = require("./modules/get_reuters_articles.js");
+
 
 /*
 async function parseText(file) {
@@ -77,8 +79,13 @@ app.get('/', async (req, res) => {
 
   // doesn't work if name is splitText. Wierd
   //const split_text = splitText(apiText)
-  const split_text = await readFile(hamlet)
+  //const split_text = await readFile(hamlet)
   //console.log("split text: " + split_text)
+
+  const text = await reutersScraper.getArticleText();
+  const split_text = splitText(text);
+  console.log(split_text);
+
   res.render("index.ejs", {text: split_text});
 });
 

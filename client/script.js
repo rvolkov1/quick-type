@@ -29,7 +29,19 @@ class TypeTest {
     this.end = true;
 
     const wpm = this.letters[0].parentElement.parentElement.children.length / ((Date.now() - this.startTime) / (1000 * 60));
-    console.log(wpm)
+    console.log(wpm);
+
+    let string = "";
+    for (const key in this.charsIncorrect) {
+      string.concat(this.letters[key].parentElement.innerText)
+      console.log(this.letters[key].parentElement.innerText)
+    }
+    console.log(string);
+
+    document.getElementsByClassName("textContainer")[0].style.display = "none";
+    const resultsScreen = document.getElementById("resultsScreen");
+    resultsScreen.style.display = "block";
+    resultsScreen.children[0].innerHTML = Math.round(wpm);
   }
 
   toggleAltKey() {
@@ -122,6 +134,13 @@ class TypeTest {
     } else if (key.length === 1) {
       this.letters[this.currKey].classList.add("incorrect");
       this.letters[this.currKey].classList.remove("currKey");
+
+      // if first wrong char add to wrong char array
+      if (this.currKey === 0 || this.letters[this.currKey - 1].classList.contains("correct")) {
+        this.charsIncorrect.push(this.currKey)
+      }
+
+      if (this.currKey === this.letters.length - 1) return ;
       this.currKey ++;
       this.letters[this.currKey].classList.add("currKey");
     }
