@@ -81,50 +81,26 @@ html, body {
   display: flex;
 }
 
-/*
-.switch {
-  margin: auto;
-  height: 20px;
-  width: 40px;
-  background-color: var(--compliment-color);
-  -webkit-transition: 1s;
-  transition: 1s;
-}
-
-.slider {
-  float: left;
-  position: relative;
-  display: inline-block;
-  content: "";
-  height: 20px;
-  width: 20px;
-  background-color: var(--accent-color);
-  -webkit-transition: 1s;
-  transition: 1s;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-input:checked + .switch {
-  background-color: var(--compliment-color);
-}
-
-input:checked + .slider {
-  transform: translateX(20px);
-  background-color: var(--compliment-color);
-}
-*/
-
 .textContainer {
   min-height: 90vh; /* minimum height = screen height */
   display: flex;
   justify-content: center;
   align-items: center;
+}
 
+.metricsText {
+  color: var(--compliment-color);
+  font-family: 'Roboto', sans-serif;  font-size: 2em;
+  font-size: 1.5em;
+  margin: 0 10px 0 10px;
+}
+
+.firstMetric {
+  margin-left: auto;
+}
+
+.lastMetric {
+  margin: right: 0;
 }
 
 .textBox {

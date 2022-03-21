@@ -1,15 +1,4 @@
 
-function toggleDarkTheme() {
-  const bgColor = getComputedStyle(document.body).getPropertyValue("--bg-color");
-  const complimentColor = getComputedStyle(document.body).getPropertyValue("--compliment-color");
-  const root = document.documentElement;
-
-  console.log("\"" + bgColor.trim() + "\"")
-
-  root.style.setProperty('--compliment-color', bgColor.trim());
-  //root.style.setProperty('--compliment-color', 'blue');
-}
-
 class TypeTest {
   constructor(letters) {
     this.letters = letters;
@@ -88,6 +77,15 @@ class TypeTest {
     }
   }
 
+  updateMetrics() {
+    // index of currWord will be words completed
+    const wordsCompleted = [this.letters[this.currKey].parentElement.children].indexOf(this.letters[this.currKey]);
+
+    const totalWords = this.letters[this.currKey].parentElement.children.length;
+
+    document.getElementByClassName('wordsCompleted')[0].innerHTML = `${wordsCompleted}/${totalWords}`;
+  }
+
   altDelete() {
     if ((this.letters[this.currKey-1].parentElement !== this.letters[this.currKey].parentElement && this.letters[this.currKey].innerHTML === "&nbsp;") || this.currKey == 0) return;
 
@@ -115,7 +113,8 @@ class TypeTest {
       this.letters[this.currKey].classList.add("correct");
       this.currKey ++;
       this.letters[this.currKey].classList.add("currKey");
-      this.updateScroll(this.letters[this.currKey])
+      this.updateScroll(this.letters[this.currKey]);
+      this.updateMetrics();
 
       if (this.startTime == undefined) {
         this.beginTest();

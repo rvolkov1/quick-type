@@ -21,13 +21,20 @@
     </div>
     <div class="textContainer">
       <div class="textBox noSelect">
-        <% text.forEach((word) => { %>
-          <div class="word noSelect">
-            <% for (letter of word) { %>
-              <div class="letter noSelect"><%= letter === ' '? "\u00A0" : letter %></div>
-            <% } %>
-          </div>
-        <% }); %>
+        <div class="metrics">
+          <span class="firstMetric metricsText wordsCompleted">43/52</span>
+          <span class="lastMetric metricsText wpm">23/45 wpm</span>
+        </div>
+        <div class="text">
+          <% text.forEach((word) => { %>
+            <div class="word noSelect">
+              <% for (letter of word) { %>
+                <div class="letter noSelect"><%= letter === ' '? "\u00A0" : letter %></div>
+              <% } %>
+            </div>
+          <% }); %>
+
+        </div>
       </div>
     </div>
     <div id="resultsScreen">
