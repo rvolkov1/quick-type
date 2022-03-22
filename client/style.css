@@ -89,10 +89,10 @@ html, body {
 }
 
 .metricsText {
+  display: inline-block;;
   color: var(--compliment-color);
-  font-family: 'Roboto', sans-serif;  font-size: 2em;
+  font-family: 'Roboto', sans-serif;
   font-size: 1.5em;
-  margin: 0 10px 0 10px;
 }
 
 .firstMetric {
@@ -100,7 +100,7 @@ html, body {
 }
 
 .lastMetric {
-  margin: right: 0;
+  margin-left: 50px;
 }
 
 .textBox {

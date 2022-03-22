@@ -3,6 +3,8 @@ class TypeTest {
   constructor(letters) {
     this.letters = letters;
     this.currKey = 0;
+    this.currWord = 0;
+    this.totalWords = letters[0].parentElement.parentElement.children.length;
     this.altKey = false;
     this.charsIncorrect = [];
     this.wordsIncorrect = [];
@@ -23,9 +25,8 @@ class TypeTest {
     let string = "";
     for (const key in this.charsIncorrect) {
       string.concat(this.letters[key].parentElement.innerText)
-      console.log(this.letters[key].parentElement.innerText)
     }
-    console.log(string);
+    console.log(string.trim);
 
     document.getElementsByClassName("textContainer")[0].style.display = "none";
     const resultsScreen = document.getElementById("resultsScreen");
@@ -78,12 +79,16 @@ class TypeTest {
   }
 
   updateMetrics() {
-    // index of currWord will be words completed
-    const wordsCompleted = [this.letters[this.currKey].parentElement.children].indexOf(this.letters[this.currKey]);
+    // if new word total words increases
+    if (this.letters[this.currKey].parentElement != this.letters[this.currKey -1].parentElement) {
+      this.currWord ++;
 
-    const totalWords = this.letters[this.currKey].parentElement.children.length;
+      const minutesSinceStart = (Date.now() - this.startTime) / 1000 / 60;
+      console.log(this.totalWords / minutesSinceStart);
+      document.getElementsByClassName('wpm')[0].innerHTML = Math.round(this.currWord / minutesSinceStart);
+    }
 
-    document.getElementByClassName('wordsCompleted')[0].innerHTML = `${wordsCompleted}/${totalWords}`;
+    document.getElementsByClassName('wordsCompleted')[0].innerHTML = `${this.currWord}/${this.totalWords}`;
   }
 
   altDelete() {
@@ -146,6 +151,7 @@ class TypeTest {
   }
 }
 
+//console.log(document.getElementsByClassName('letter')[0].parentElement.parentElement.children.length);
 const currentTypeTest = new TypeTest(document.getElementsByClassName('letter'));
 
 window.addEventListener('keydown', (e) => {
