@@ -11,6 +11,19 @@
   }
 }
 
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --compliment-color: gb(253,252,243);
+    --content-color: rgb(253,252,243);
+    --bg-color: rgb(79,174,103);
+    --accent-color: rgba(177, 169, 159, 1);
+    --incorrect-color: #cc0000;
+  }
+}
+
+
+
 @media (prefers-color-scheme: light) {
   :root {
     --bg-color: rgb(253, 252, 243);

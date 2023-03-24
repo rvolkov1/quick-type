@@ -11,6 +11,7 @@ class TypeTest {
     this.startTime;
     this.end = false;
   }
+  
 
   beginTest() {
     this.startTime = Date.now();
@@ -40,6 +41,10 @@ class TypeTest {
 
   convertCharValues(key) {
     switch (key) {
+      case key.charCodeAt(0) > 127:
+            // character is not utf8 and difficult to type on normal keyboards
+            console.log("char not in ascii " + key);
+            return " ";
       case "&nbsp;":
         return " ";
         break;
@@ -84,7 +89,7 @@ class TypeTest {
       this.currWord ++;
 
       const minutesSinceStart = (Date.now() - this.startTime) / 1000 / 60;
-      console.log(this.totalWords / minutesSinceStart);
+//      console.log(this.totalWords / minutesSinceStart);
       document.getElementsByClassName('wpm')[0].innerHTML = Math.round(this.currWord / minutesSinceStart);
     }
 

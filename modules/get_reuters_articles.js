@@ -32,8 +32,7 @@ exports.getFrontPageArticles = async () => {
 
 exports.getArticleText = async (article) => {
   $ = cheerio.load(await data(article));
-  //$ = cheerio.load(await data("https://www.reuters.com/world/china/buttressing-greenland-bailout-chinas-distressed-property-sector-2022-03-15/"));
-
+  
   let text = "";
 
   $("article").find("p").each((index, p) => {

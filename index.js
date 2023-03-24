@@ -4,10 +4,12 @@ const fs = require('fs');
 const ejs = require('ejs');
 const path = require("path");
 const axios = require("axios");
+const reutersScraper = require("./modules/get_reuters_articles.js");
+
 const port = 8080;
 const hamlet = "/texts/books/hamlet.txt";
+const lorem5 = '/texts/books/lorem5.txt';
 
-const reutersScraper = require("./modules/get_reuters_articles.js");
 
 const reutersArticles = async () => {
   return await reutersScraper.getFrontPageArticles();
@@ -61,9 +63,7 @@ app.set("views", path.join(__dirname, 'client/views'));
 app.use(express.static(__dirname + '/client'));
 
 app.get('/', async (req, res) => {
-  //const split_text = splitText(apiText)
-  //const split_text = await readFile(hamlet)
-  //console.log("split text: " + split_text)
+  //const split_text = await readFile(lorem5)
 
   const articles = await reutersArticles();
   const articleIndex = Math.floor(Math.random() * articles.length);
