@@ -40,11 +40,13 @@ class TypeTest {
   }
 
   convertCharValues(key) {
+    //console.log(key, key.charCodeAt(0));
     switch (key) {
       case key.charCodeAt(0) > 127:
             // character is not utf8 and difficult to type on normal keyboards
             console.log("char not in ascii " + key);
             return " ";
+            break;
       case "&nbsp;":
         return " ";
         break;
