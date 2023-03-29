@@ -60,6 +60,10 @@ class TypeTest {
       case "\“":
         return "\"";
         break;
+      case "&#8211;":
+      case "&#8212;":
+        return "-";
+        break; 
       default:
         return this.letters[this.currKey].innerText;
     }
