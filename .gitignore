@@ -2,3 +2,5 @@ package
 node_modules
 texts
 client/views/ejs.js
+package-lock.json
+package.json
